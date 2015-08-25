@@ -18,7 +18,7 @@
         android:id="@+id/when"
         android:nestedScrollingEnabled="false"
         android:layout_alignParentTop="true"
-        android:textColor="#000000" />
+        />
 
 
 
@@ -28,7 +28,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/min"
         android:layout_toEndOf="@id/when"
-        android:textColor="#000000" />
+        />
 
 
     <TextView
@@ -40,18 +40,18 @@
         android:textSize="35dp"
         android:layout_alignTop="@+id/numberPicker1"
         android:layout_toEndOf="@+id/numberPicker1"
-        android:layout_marginTop="60dp"
-        android:textColor="#000000" />
+        android:layout_marginTop="62dp" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="I want to sleep for 0 hours"
+        android:text="I don&apos;t want to sleep"
         android:id="@+id/how"
         android:layout_below="@+id/numberPicker1"
-        android:textColor="#000000" />
+        android:layout_centerHorizontal="true"
+        />
 
     <NumberPicker
         android:layout_width="wrap_content"
@@ -94,8 +94,7 @@
         android:id="@+id/am"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/min"
-        android:layout_marginLeft="20dp"
-        android:textColor="#000000" />
+        android:layout_marginLeft="7dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -105,22 +104,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="How long does it take you to go to bed?"
-        android:id="@+id/bed"
-        android:layout_below="@+id/numberPicker3"
-        android:layout_alignParentStart="true" />
-
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/numberPicker5"
-        android:layout_below="@+id/bed"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical" />
--->
 
 </RelativeLayout>

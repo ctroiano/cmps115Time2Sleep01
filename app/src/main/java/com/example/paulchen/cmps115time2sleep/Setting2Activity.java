@@ -2,9 +2,7 @@ package com.example.paulchen.cmps115time2sleep;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,18 +12,18 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 
 public class Setting2Activity extends Activity {
+
     boolean touch = false;
     TextView when;
-    TextView min;
+    TextView helper;
     int remindTime = 15;
     String TextMessage = "It's time for you to get ready and sleep!";
     EditText customText;
     String customMessage;
     BroadcastReceiver broadcast_reciever;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +39,13 @@ public class Setting2Activity extends Activity {
 
 
         when = (TextView)findViewById(R.id.when);
-        min = (TextView)findViewById(R.id.min);
+        helper = (TextView)findViewById(R.id.helper);
         String[] remind = new String[60];
         for(int i = 0; i <= 59; i++){
             if(i < 10)  remind[i] = "0" + i;
             else remind[i] = "" + i;
-            //System.out.println(sleepTime[i]);
         }
+
         // numberPicker that displays reminder time
         final NumberPicker n2 = (NumberPicker)findViewById(R.id.numberPickerTime);
         n2.setMinValue(0);
@@ -57,16 +55,22 @@ public class Setting2Activity extends Activity {
         n2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if (!touch) when.setText("I want to be reminded");
-                touch = true;
-                if (newVal < 2) {
-                    min.setText(" " + newVal+" minute before I sleep");
+                //if (!touch) when.setText("I want to be reminded 0 minute before I go to bed");
+                //touch = true;
+                if (newVal == 0){
+                    when.setText("Remind me to go to bed");
+                }
+                else if (newVal == 1) {
+                    when.setText("Remind me " + newVal + " minute before I sleep");
+                    helper.setText("minute");
                 }
                 else {
-                    min.setText(" " + newVal+" minutes before I sleep");
+                    when.setText("Remind me " + newVal + " minutes before I sleep");
+                    helper.setText("minutes");
                 }
             }
         });
+
         customText = (EditText)findViewById(R.id.editText);
         customText.setText(TextMessage);
 

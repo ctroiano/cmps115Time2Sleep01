@@ -33,14 +33,12 @@ public class SettingActivity extends Activity {
         for(int i = 0; i <= 59; i++){
             if(i < 10)  digits[i] = "0" + i;
             else digits[i] = "" + i;
-            System.out.println(digits[i]);
         }
 
         String[] hrs = new String[25];
         for(int i = 0; i <= 24; i++){
             if (i < 10) hrs[i] = "0" + i;
             else hrs[i] = "" + i;
-            System.out.println(hrs[i]);
         }
 
         String[] ampm = new String[2];
@@ -98,7 +96,13 @@ public class SettingActivity extends Activity {
         n3.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                how.setText("I want to sleep for " + newVal + " hours");
+                if (newVal == 0){
+                    how.setText("I don't want to sleep");
+                }else if (newVal == 1){
+                    how.setText("I want to sleep for " + newVal + " hour");
+                }else if(newVal > 1){
+                    how.setText("I want to sleep for " + newVal + " hours");
+                }
             }
         });
 
@@ -110,7 +114,11 @@ public class SettingActivity extends Activity {
         n4.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                am.setText("" + newVal);
+                if (newVal == 0){
+                    am.setText("AM");
+                }else {
+                    am.setText("PM");
+                }
             }
         });
 
