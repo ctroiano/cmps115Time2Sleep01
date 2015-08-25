@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.paulchen.cmps115time2sleep.SettingActivity"
+    android:id="@+id/SettingActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="I want to wake up at 1:00"
+        android:id="@+id/when"
+        android:nestedScrollingEnabled="false"
+        android:layout_alignParentTop="true"
+        android:textColor="#000000" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/min"
+        android:layout_toEndOf="@id/when"
+        android:textColor="#000000" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=":"
+        android:id="@+id/colon"
+        android:textSize="35dp"
+        android:layout_alignTop="@+id/numberPicker1"
+        android:layout_toEndOf="@+id/numberPicker1"
+        android:layout_marginTop="60dp"
+        android:textColor="#000000" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="I want to sleep for 0 hours"
+        android:id="@+id/how"
+        android:layout_below="@+id/numberPicker1"
+        android:textColor="#000000" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker3"
+        android:layout_below="@+id/how"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker2"
+        android:layout_alignBottom="@+id/numberPicker1"
+        android:layout_toEndOf="@+id/colon"
+        android:orientation="vertical"
+        android:nestedScrollingEnabled="true" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker1"
+        android:orientation="vertical"
+        android:layout_below="@+id/when"
+        android:layout_toStartOf="@+id/numberPicker3" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPickerAM"
+        android:layout_alignBottom="@+id/numberPicker2"
+        android:layout_toEndOf="@+id/numberPicker2"
+        android:orientation="vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="AM"
+        android:id="@+id/am"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/min"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000000" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:id="@+id/buttonContinue"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="How long does it take you to go to bed?"
+        android:id="@+id/bed"
+        android:layout_below="@+id/numberPicker3"
+        android:layout_alignParentStart="true" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker5"
+        android:layout_below="@+id/bed"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" />
+-->
+
+</RelativeLayout>
