@@ -31,6 +31,14 @@ public class MainActivity extends Activity {
             }
         });
 
+        final Button setProfile = (Button) findViewById(R.id.buttonProfiles);
+        setProfile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent profileIntent = new Intent(MainActivity.this, Profiles.class);
+                startActivity(profileIntent);
+            }
+        });
+
     }
 
 

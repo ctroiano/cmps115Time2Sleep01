@@ -47,12 +47,13 @@ public class Setting2Activity extends Activity {
         }
 
         // numberPicker that displays reminder time
-        final NumberPicker n2 = (NumberPicker)findViewById(R.id.numberPickerTime);
-        n2.setMinValue(0);
-        n2.setMaxValue(59);
-        n2.setDisplayedValues(remind);
-        n2.setWrapSelectorWheel(true);
-        n2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        final NumberPicker n1 = (NumberPicker)findViewById(R.id.numberPickerTime);
+        n1.setMinValue(0);
+        n1.setMaxValue(59);
+        n1.setDisplayedValues(remind);
+        n1.setValue(30);
+        n1.setWrapSelectorWheel(true);
+        n1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 //if (!touch) when.setText("I want to be reminded 0 minute before I go to bed");
@@ -80,7 +81,7 @@ public class Setting2Activity extends Activity {
             public void onClick(View v) {
                 // Perform action on click
                 // Change to the Alarm Setup Activity
-                remindTime = n2.getValue();
+                remindTime = n1.getValue();
 
                 customMessage = customText.getText().toString();
 

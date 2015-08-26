@@ -92,6 +92,7 @@ public class SettingActivity extends Activity {
         n3.setMinValue(0);
         n3.setMaxValue(24);
         n3.setDisplayedValues(hrs);
+        n3.setValue(8);
         n3.setWrapSelectorWheel(true);
         n3.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override

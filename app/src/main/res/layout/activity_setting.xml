@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="I don&apos;t want to sleep"
+        android:text="I want to sleep for 8 hours"
         android:id="@+id/how"
         android:layout_below="@+id/numberPicker1"
         android:layout_centerHorizontal="true"
