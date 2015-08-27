@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        final int check = 0;
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.MainActivity);
         layout.setBackgroundResource(R.drawable.time2sleep);
 
@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
                 // Perform action on click
                 // Change to the Alarm Setup Activity
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                intent.putExtra("check",check);
                 startActivity(intent);
             }
         });

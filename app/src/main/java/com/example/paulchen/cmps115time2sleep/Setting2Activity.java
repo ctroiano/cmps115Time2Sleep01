@@ -2,7 +2,9 @@ package com.example.paulchen.cmps115time2sleep;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,29 +15,44 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 
+
+
 public class Setting2Activity extends Activity {
+
+    public static final String timeSettings = "com.sleepTime.timeSettings";
+
 
     boolean touch = false;
     TextView when;
     TextView helper;
-    int remindTime = 15;
+    int remindTime = 30;
     String TextMessage = "It's time for you to get ready and sleep!";
     EditText customText;
     String customMessage;
+    String saveMessage;
     BroadcastReceiver broadcast_reciever;
+    boolean existingProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final SharedPreferences pref = getSharedPreferences(timeSettings, Context.MODE_PRIVATE);
+
+        final SharedPreferences.Editor editor = pref.edit();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting2);
         //passed through variables
         Bundle bundle = getIntent().getExtras();
 
+
+
         final int hoursSetting = bundle.getInt("hoursSetting");
         final int minutesSetting = bundle.getInt("minutesSetting");
         final int sleepTime = bundle.getInt("sleepTime");
-
-
+        final int check = bundle.getInt("check");
+        final String profileName = bundle.getString("profileName");
+        saveMessage = pref.getString(profileName + "customMessage", "");
+        remindTime = pref.getInt(profileName + "remindTime", 0);
 
 
         when = (TextView)findViewById(R.id.when);
@@ -51,11 +68,16 @@ public class Setting2Activity extends Activity {
         n1.setMinValue(0);
         n1.setMaxValue(59);
         n1.setDisplayedValues(remind);
-        n1.setValue(30);
+        System.out.println(remindTime);
+        n1.setValue(remindTime);
+
+
         n1.setWrapSelectorWheel(true);
         n1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
                 //if (!touch) when.setText("I want to be reminded 0 minute before I go to bed");
                 //touch = true;
                 if (newVal == 0){
@@ -73,8 +95,14 @@ public class Setting2Activity extends Activity {
         });
 
         customText = (EditText)findViewById(R.id.editText);
-        customText.setText(TextMessage);
 
+        if(saveMessage =="") {
+            customText.setText(TextMessage);
+        }
+        else
+        {
+            customText.setText(saveMessage);
+        }
         //button that moves on to next activity
         final Button buttonFinished = (Button) findViewById(R.id.buttonFinished);
         buttonFinished.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +112,7 @@ public class Setting2Activity extends Activity {
                 remindTime = n1.getValue();
 
                 customMessage = customText.getText().toString();
-
+                saveMessage = customMessage;
 
 
                 Intent intent = new Intent(Setting2Activity.this, AlarmActivity.class);
@@ -93,6 +121,12 @@ public class Setting2Activity extends Activity {
                 intent.putExtra("sleepTime", sleepTime);
                 intent.putExtra("remindTime", remindTime);
                 intent.putExtra("customMessage", customMessage);
+                intent.putExtra("check",check);
+
+                editor.putInt(profileName + "remindTime", remindTime);
+                editor.putString(profileName + "customMessage", saveMessage);
+                editor.commit();
+
                 // System.out.println(remindTime);
                 startActivity(intent);
             }

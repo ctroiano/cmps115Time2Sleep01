@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Remind me to go to bed"
+        android:text="Remind me 30 minutes before I sleep"
         android:id="@+id/when"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -22,7 +22,8 @@
         android:text="Finished"
         android:id="@+id/buttonFinished"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@style/buttons" />
 
     <EditText
         android:layout_width="wrap_content"

@@ -21,15 +21,16 @@ public class AlarmActivity extends Activity {
         setContentView(R.layout.activity_alarm);
         int hourDisplayed;
         String minuteDisplayed;
-
+        //variables passed through from previous setting activities
         Bundle bundle = getIntent().getExtras();
         int hoursSetting = bundle.getInt("hoursSetting");
         int minutesSetting = bundle.getInt("minutesSetting");
         final int sleepTime = bundle.getInt("sleepTime");
         final int remindTime = bundle.getInt("remindTime");
         final String customMessage = bundle.getString("customMessage");
+        final int check = bundle.getInt("check");
 
-
+        //math to add in the sleepTime and reminderTime
         hoursSetting = hoursSetting - sleepTime;
         if(hoursSetting <0){
             hoursSetting = 24 + hoursSetting;
@@ -40,9 +41,9 @@ public class AlarmActivity extends Activity {
             hoursSetting--;
         }
 
-        //displayed value for toast message
 
 
+        //set calendar to alarm time
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
@@ -51,8 +52,10 @@ public class AlarmActivity extends Activity {
         calendar.set(Calendar.MINUTE, minutesSetting);
         System.out.println(hoursSetting+":"+minutesSetting);
 
+        //build alarm object and pass through custom text message
         Intent intentAlarm = new Intent(this, AlarmRecieve.class).putExtra("customMessage", customMessage);
         AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
         long time = calendar.getTimeInMillis();
         System.out.println(time);
 
@@ -62,16 +65,24 @@ public class AlarmActivity extends Activity {
 
 
 
-
+        //if the setting time is less than current time add 24 hours to it
         long currTime = currentTime.getTimeInMillis();
         //print4
         System.out.println(currTime);
         if(time<currTime){
             time =   1000*60*60*24+time;
         }
-
-        am.set(AlarmManager.RTC_WAKEUP,time, PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-
+        //set the alarm with correct time and intent
+        //if it is coming from profile activity
+        //alarm will be set as repeating till the profile is deleted
+        if(check==1){
+            am.setRepeating(AlarmManager.RTC_WAKEUP, time,1000*60*60*24,
+                    PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+            System.out.println("alarm is repeating");
+        }else {
+            am.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+            System.out.println("alarm is set once");
+        }
         //clean up the displayed time for Toast message
         if(hoursSetting>12){
             hourDisplayed = hoursSetting-12;

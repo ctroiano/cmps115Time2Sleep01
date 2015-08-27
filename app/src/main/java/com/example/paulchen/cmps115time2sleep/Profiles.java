@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -33,18 +34,26 @@ public class Profiles extends Activity {
     ArrayAdapter<String> adapter;
 
 
-
+    final int check = 1;
     final Context context = this;
 
     private String result = "";
 
+
+
     //Don't change this. This is the profileSettings.xml that will hold the key-value pairs for
     //reloading the profiles.
-    public static final String profileSettings = "profileSettings";
+    public static final String profileSettings = "com.sleepTime.profileSettings";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        int position = 0;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        final SharedPreferences pref = getSharedPreferences(profileSettings, Context.MODE_PRIVATE);
+
+        final SharedPreferences.Editor editor = pref.edit();
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles);
         adapter = new ArrayAdapter<String>(this,
@@ -53,8 +62,9 @@ public class Profiles extends Activity {
         ListView lv = (ListView) findViewById(R.id.profileList);
 
         lv.setAdapter(adapter);
+        numberOfProfiles = pref.getInt("numberOfProfiles", 0);
 
-        if(numberOfProfiles > 0)
+        if(numberOfProfiles > -1)
         {
 
             populateProfileList(lv);
@@ -89,9 +99,27 @@ public class Profiles extends Activity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        String toRemove = listItems.get(listPosition);
                                         listItems.remove(listPosition);
                                         numberOfProfiles--;
                                         adapter.notifyDataSetChanged();
+                                        for(int i = 0; i < 10; i++)
+                                        {
+                                            String profileName = pref.getString("profile" + i,"");
+                                            if(profileName == "")
+                                            {
+                                                //do nothing
+                                            }
+                                            else if (toRemove == profileName)
+                                            {
+                                                editor.remove("profile" + i);
+                                                int temp = pref.getInt("numberOfProfiles", numberOfProfiles);
+                                                temp--;
+                                                editor.putInt("numberOfProfiles", numberOfProfiles);
+                                                editor.commit();
+                                                break;
+                                            }
+                                        }
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -125,11 +153,19 @@ public class Profiles extends Activity {
         //This for loop will check if numberOfProfiles is bigger than 1.
         //If true then it will load all the saved profiles
         //Might need to tweak "profile" + 1 depending on how we want the key to be saved
-        for( int i = 1; i <= pref.getInt("numberOfProfiles", 0); i++)
+        for( int i = 0; i <= 10; i++)
         {
 
-            String profileName = pref.getString("profile"+i, "");
-            listItems.add(profileName);
+            String profileName = pref.getString("profile" + i, "");
+            System.out.println(profileName);
+            if(profileName == "")
+            {
+                //Do Nothing
+            }
+            else {
+                listItems.add(profileName);
+                adapter.notifyDataSetChanged();
+            }
         }
     }
     /*
@@ -165,24 +201,20 @@ public class Profiles extends Activity {
                                 result = userInput.getText().toString();
                                 listItems.add(result);
                                 adapter.notifyDataSetChanged();
+
                                 numberOfProfiles++;
+
 
 
                                 editor.putInt("numberOfProfiles", numberOfProfiles);
                                 editor.putString("profile" + numberOfProfiles, result);
                                 editor.commit();
 
-                                //Following loop will print out what profiles have been saved in profileSettings
 
-                               /* for (int i = 1; i <= numberOfProfiles; i++) {
-                                    System.out.println("Times Run  :  " + i + "    " + "profile"+i);
-                                    String profileName = pref.getString("profile" + i, "");
-                                    System.out.println("THIS SHOULD RUN MORE TIMES FOR EVERY PROFILE" + profileName);
-
-                                }*///
 
                                 //Here I am passing the newly added profile name to the settings activity
                                 Intent intent = new Intent(Profiles.this, SettingActivity.class);
+                                intent.putExtra("check",check);
                                 intent.putExtra("profileName", userInput.getText().toString());
                                 startActivity(intent);
                             }

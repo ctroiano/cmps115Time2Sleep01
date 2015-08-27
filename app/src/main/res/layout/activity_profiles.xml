@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/addBtn"
         android:text="Add New Profile"
-        android:onClick="addItems"/>
+        android:onClick="addItems"
+        style="@style/buttons" />
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -22,7 +23,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextResult"/>
+        android:id="@+id/editTextResult" />
 
 
 </RelativeLayout>

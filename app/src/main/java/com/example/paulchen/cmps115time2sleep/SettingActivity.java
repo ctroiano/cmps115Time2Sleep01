@@ -1,7 +1,9 @@
 package com.example.paulchen.cmps115time2sleep;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,19 +18,46 @@ public class SettingActivity extends Activity {
     int hourSetting;
     int minuteSetting;
     int sleepTime;
+    int AMorPM;
 
     TextView when;
     TextView min;
     TextView how;
     TextView am;
     boolean touch = false;
+    boolean existingProfile = false;
 
+    String profileName = null;
+
+    public static final String timeSettings = "com.sleepTime.timeSettings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPreferences pref = getSharedPreferences(timeSettings, Context.MODE_PRIVATE);
+
+        final SharedPreferences.Editor editor = pref.edit();
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_setting);
 
+        if( getIntent().getExtras() == null)
+        {
+            //Do nothing
+        }
+        else
+        {
+            Bundle extras = getIntent().getExtras();
+            profileName = extras.getString("profileName");
+            hourSetting = pref.getInt(profileName + "_" + "Hour_Setting", 0);
+            minuteSetting = pref.getInt(profileName + "_" + "Minute_Setting", 0);
+            sleepTime = pref.getInt(profileName + "_" + "Sleep_Time", 0);
+            AMorPM = pref.getInt(profileName + "_" + "AMorPM", 0);
+            existingProfile = true;
+        }
+
+        Bundle bundle = getIntent().getExtras();
+        final int check = bundle.getInt("check");
         String[] digits = new String[60];
         for(int i = 0; i <= 59; i++){
             if(i < 10)  digits[i] = "0" + i;
@@ -55,6 +84,10 @@ public class SettingActivity extends Activity {
         final NumberPicker n1 = (NumberPicker)findViewById(R.id.numberPicker1);
         n1.setMaxValue(12);
         n1.setMinValue(1);
+        if(existingProfile) {
+            n1.setValue(hourSetting);
+
+        }
         n1.setWrapSelectorWheel(true);
         n1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
             @Override
@@ -71,6 +104,10 @@ public class SettingActivity extends Activity {
         final NumberPicker n2 = (NumberPicker)findViewById(R.id.numberPicker2);
         n2.setMinValue(0);
         n2.setMaxValue(59);
+        if(existingProfile) {
+            n2.setValue(minuteSetting);
+
+        }
         n2.setDisplayedValues(digits);
         n2.setWrapSelectorWheel(true);
         n2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -91,6 +128,10 @@ public class SettingActivity extends Activity {
         final NumberPicker n3 = (NumberPicker)findViewById(R.id.numberPicker3);
         n3.setMinValue(0);
         n3.setMaxValue(24);
+        if(existingProfile) {
+            n3.setValue(sleepTime);
+
+        }
         n3.setDisplayedValues(hrs);
         n3.setValue(8);
         n3.setWrapSelectorWheel(true);
@@ -110,6 +151,10 @@ public class SettingActivity extends Activity {
         final NumberPicker n4 = (NumberPicker)findViewById(R.id.numberPickerAM);
         n4.setMinValue(0);
         n4.setMaxValue(1);
+        if(existingProfile) {
+            n4.setValue(AMorPM);
+
+        }
         n4.setDisplayedValues(ampm);
         n4.setWrapSelectorWheel(true);
         n4.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -132,6 +177,7 @@ public class SettingActivity extends Activity {
                 hourSetting = n1.getValue();
                 minuteSetting = n2.getValue();
                 sleepTime = n3.getValue();
+                AMorPM = n4.getValue();
 
 
                 if(n4.getValue()==1){
@@ -147,7 +193,17 @@ public class SettingActivity extends Activity {
                 intent.putExtra("hoursSetting", hourSetting);
                 intent.putExtra("minutesSetting", minuteSetting);
                 intent.putExtra("sleepTime", sleepTime);
+                intent.putExtra("check", check);
+                intent.putExtra("profileName", profileName);
+
+                editor.putInt(profileName + "_" + "Hour_Setting", hourSetting);
+                editor.putInt(profileName + "_" + "Minute_Setting", minuteSetting);
+                editor.putInt(profileName + "_" + "Sleep_Time", sleepTime);
+                editor.putInt(profileName + "_" + "AMorPM", AMorPM);
+                editor.commit();
+
                 startActivity(intent);
+
             }
         });
     }

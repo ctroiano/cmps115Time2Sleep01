@@ -102,7 +102,8 @@
         android:text="Continue"
         android:id="@+id/buttonContinue"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@style/buttons" />
 
 
 </RelativeLayout>
