@@ -37,6 +37,10 @@
             android:name=".Setting2Activity"
             android:label="@string/title_activity_setting2" >
         </activity>
+        <activity
+            android:name=".Profiles"
+            android:label="@string/title_activity_profiles" >
+        </activity>
     </application>
 
 </manifest>
