@@ -1,4 +1,5 @@
 Functional sleeping alarm app built in CMPS 115 at UC Santa Cruz
+
 Contributors:
 Paul Chen
 Travis McQueen
